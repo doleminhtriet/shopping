@@ -1,0 +1,69 @@
+<?php
+    // Include the database connection file
+    include '../conn.php';
+    
+    // SQL query to select all products
+    $sql = "SELECT * FROM products";
+    $result = $conn->query($sql);
+    
+    // Check if there are results
+    if ($result) {
+        // Check if there are results
+        if ($result->num_rows > 0) {
+            ?>
+            <header>
+                <h1>Admin Dashboard</h1>
+            </header>
+    
+            <nav>
+                <a href="#" class="products">Products</a>
+                <a href="#" class="category">Category</a>
+            </nav>
+    
+            <div class="container">
+                <div class="dashboard-content">
+                    <h2>Welcome to the Admin Dashboard</h2>
+    
+                    <!-- Display list of products -->
+                    <h3>Product List</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["product_id"] . "</td>";
+                                echo "<td>" . $row["product_name"] . "</td>";
+                                echo "<td>" . $row["price"] . "</td>";
+                                echo "<td>" . $row["description"] . "</td>";
+                                echo "</tr>";
+                            }
+                            
+                            
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php
+        } else {
+            echo "No products found.";
+        }
+    } else {
+        echo "Error executing the query: " . $conn->error;
+    }
+    
+
+// Close the database connection
+$conn->close();
+
+
+    ?>

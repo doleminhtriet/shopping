@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="css/adminStyle.css">
+
+   
+</head>
+<body>
+
+    
+
+
+<header>
+    <h1>Update Product</h1>
+</header>
+
+<nav>
+    <a href="index.php" class="products">Products</a>
+    <a href="#" class="category">Category</a>
+</nav>
+
+<div class="container">
+    <form action="updateProduct.php" method="post" enctype="multipart/form-data">
+        
+        <input type="hidden" id="product_id" name="product_id">
+        <label for="product_name">Product Name:</label>
+        <input type="text" name="product_name" required>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" required></textarea>
+
+        <label for="picture">Picture:</label>
+        <input type="file" name="picture" accept="image/*" required>
+
+        <input type="submit" value="Update Product">
+    </form>
+
+
+   
+
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+        // Get the product ID from the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var productId = urlParams.get('id');
+
+        // Set the product ID in the hidden input field
+        document.getElementById('product_id').value = productId;
+
+        // Fetch product data based on the product ID and pre-fill the form fields
+        // Use asynchronous function to fetch data
+        getProductData(productId)
+            .then(function (productData) {
+                // Check if the elements exist before setting their values
+                alert(productNameElement);
+                var productNameElement = document.getElementById('product_name');
+                var priceElement = document.getElementById('price');
+                var descriptionElement = document.getElementById('description');
+
+                if (productNameElement && priceElement && descriptionElement) {
+                    productNameElement.value = productData.name;
+                    priceElement.value = productData.price;
+                    descriptionElement.value = productData.description;
+                } else {
+                    console.error('One or more form elements not found.');
+                }
+            })
+            .catch(function (error) {
+                console.error('Error fetching product data:', error);
+            });
+    });
+
+    // Function to fetch product data based on the product ID (replace with your actual logic)
+    async function getProductData(productId) {
+        try {
+            // Use fetch or your preferred method to retrieve data from the server
+            //alert(produi)
+            var response = await fetch('getProductById.php?id=' + productId);
+            var data = await response.json();
+
+            // Adjust this based on your actual data structure
+            return {
+                name: data.product_name,
+                price: data.price,
+                description: data.description
+            };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+</script>
+
+</body>
+</html>
