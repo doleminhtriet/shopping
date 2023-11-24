@@ -13,8 +13,8 @@
             </header>
     
             <nav>
-                <a href="#" class="products">Products</a>
-                <a href="Category.php" class="category">Category</a>
+                <a href="index.php" class="products">Products</a>
+                <a href="#" class="category">Category</a>
             </nav>
 
 <div class="container">
@@ -22,13 +22,12 @@
         <h2>Welcome to the Admin Dashboard</h2>
 
         <!-- Display list of products -->
-        <h3>Product List</h3><a href="add_product.html" class="products">Add new</a>
+        <h3>Category List</h3><a href="add_category.html" class="category">Add new</a>
         <table id="productTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Price</th>
                     <th width="30%">Description</th>
                     <th>Img</th>
                     <th></th>
@@ -46,7 +45,7 @@
     };
 
     function fetchProducts() {
-    fetch('get_products.php')
+    fetch('get_Category.php')
         .then(response => {
             // Log the raw response for debugging
             console.log('Raw response:', response);
@@ -56,7 +55,7 @@
             updateTable(data);
         })
         .catch(error => {
-            console.error('Error fetching products:', error);
+            console.error('Error fetching category:', error);
         });
     }
 
@@ -67,7 +66,7 @@
         tableBody.innerHTML = '';
 
         // Add new rows with product data
-        products.forEach(function(product) {
+        products.forEach(function(category) {
             var row = tableBody.insertRow();
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
@@ -75,42 +74,41 @@
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
-            var cell7 = row.insertCell(6);
+        
 
-            cell1.innerHTML = product.product_id;
-            cell2.innerHTML = product.product_name;
-            cell3.innerHTML = '$'+product.price;
-            cell4.innerHTML = product.description;
-            cell5.innerHTML = '<img src="data:image/jpeg;base64,' + product.product_image + '" alt="Product Image" style="max-width:100px; max-height:100px;">';
+            cell1.innerHTML = category.category_id;
+            cell2.innerHTML = category.category_name;
+            cell3.innerHTML = category.description;
+            cell4.innerHTML = '<img src="data:image/jpeg;base64,' + category.category_image + '" alt="Product Image" style="max-width:100px; max-height:100px;">';
 
              // Add update link
              var updateLink = document.createElement('a');
-            updateLink.href = 'UI_updateProduct.php?id=' + product.product_id; // Update this line
+            updateLink.href = 'UI_updateCategory.php?id=' + category.category_id; // Update this line
             updateLink.textContent = 'Update';
 
 
             // Add delete link
             var deleteLink = document.createElement('a');
-            deleteLink.href = 'delete_product.php?id=' + product.product_id; // Replace with your delete script
+            deleteLink.href = 'delete_Category.php?id=' + category.category_id; // Replace with your delete script
             deleteLink.textContent = 'Delete';
             deleteLink.onclick = function() {
                 // You can add a confirmation dialog or directly call a delete function here
                 // For simplicity, this example uses a confirmation dialog
-                var confirmDelete = confirm('Are you sure you want to delete this product?');
+                var confirmDelete = confirm('Are you sure you want to delete this Category?');
                 if (confirmDelete) {
-                    deleteProduct(product.product_id);
+                    deleteCategory(category.category_id);
                 }
                 return false; // Prevent the default link behavior
             };
 
-            cell6.appendChild(updateLink);
-            cell7.appendChild(deleteLink);
+            cell5.appendChild(updateLink);
+            cell6.appendChild(deleteLink);
         });
     }
 
-    function deleteProduct(productId) {
+    function deleteCategory(categoryId) {
     // Perform the delete operation using AJAX
-    fetch('delete_product.php?id=' + productId)
+    fetch('delete_Category.php?id=' + categoryId)
         .then(response => response.json())
         .then(data => {
             // Check if the deletion was successful
