@@ -26,12 +26,12 @@
         <table id="productTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th width= "5%">ID</th>
+                    <th width= "10%">Name</th>
                     <th width="30%">Description</th>
                     <th>Img</th>
-                    <th></th>
-                    <th></th>
+                    <th width= "5%"></th>
+                    <th width= "5%"></th>
                 </tr>
             </thead>
             <tbody id="productTableBody"></tbody>

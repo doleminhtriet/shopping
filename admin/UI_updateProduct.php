@@ -43,8 +43,8 @@
         </header>
 
         <nav>
-        <a href="index.php" class="products">Products</a>
-            <a href="#" class="category">Category</a>
+            <a href="index.php" class="products">Products</a>
+            <a href="Category.php" class="category">Category</a>
         </nav>
     
     <div class="container">

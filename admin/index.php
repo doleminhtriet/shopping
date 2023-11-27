@@ -26,13 +26,13 @@
         <table id="productTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
+                    <th width= "5%">ID</th>
+                    <th width= "10%">Name</th>
+                    <th width= "10%">Price</th>
                     <th width="30%">Description</th>
                     <th>Img</th>
-                    <th></th>
-                    <th></th>
+                    <th width= "5%"></th>
+                    <th width= "5%"></th>
                 </tr>
             </thead>
             <tbody id="productTableBody"></tbody>
@@ -40,93 +40,93 @@
     </div>
 </div>
 
-<script>
-    window.onload = function() {
-        fetchProducts();
-    };
+    <script>
+        window.onload = function() {
+            fetchProducts();
+        };
 
-    function fetchProducts() {
-    fetch('get_products.php')
-        .then(response => {
-            // Log the raw response for debugging
-            console.log('Raw response:', response);
-            return response.json();
-        })
-        .then(data => {
-            updateTable(data);
-        })
-        .catch(error => {
-            console.error('Error fetching products:', error);
-        });
-    }
+        function fetchProducts() {
+        fetch('get_products.php')
+            .then(response => {
+                // Log the raw response for debugging
+                console.log('Raw response:', response);
+                return response.json();
+            })
+            .then(data => {
+                updateTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+        }
 
-    function updateTable(products) {
-        var tableBody = document.getElementById('productTableBody');
+        function updateTable(products) {
+            var tableBody = document.getElementById('productTableBody');
 
-        // Clear existing rows
-        tableBody.innerHTML = '';
+            // Clear existing rows
+            tableBody.innerHTML = '';
 
-        // Add new rows with product data
-        products.forEach(function(product) {
-            var row = tableBody.insertRow();
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
-            var cell6 = row.insertCell(5);
-            var cell7 = row.insertCell(6);
+            // Add new rows with product data
+            products.forEach(function(product) {
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
 
-            cell1.innerHTML = product.product_id;
-            cell2.innerHTML = product.product_name;
-            cell3.innerHTML = '$'+product.price;
-            cell4.innerHTML = product.description;
-            cell5.innerHTML = '<img src="data:image/jpeg;base64,' + product.product_image + '" alt="Product Image" style="max-width:100px; max-height:100px;">';
+                cell1.innerHTML = product.product_id;
+                cell2.innerHTML = product.product_name;
+                cell3.innerHTML = '$'+product.price;
+                cell4.innerHTML = product.description;
+                cell5.innerHTML = '<img src="data:image/jpeg;base64,' + product.product_image + '" alt="Product Image" style="max-width:100px; max-height:100px;">';
 
-             // Add update link
-             var updateLink = document.createElement('a');
-            updateLink.href = 'UI_updateProduct.php?id=' + product.product_id; // Update this line
-            updateLink.textContent = 'Update';
+                // Add update link
+                var updateLink = document.createElement('a');
+                updateLink.href = 'UI_updateProduct.php?id=' + product.product_id; // Update this line
+                updateLink.textContent = 'Update';
 
 
-            // Add delete link
-            var deleteLink = document.createElement('a');
-            deleteLink.href = 'delete_product.php?id=' + product.product_id; // Replace with your delete script
-            deleteLink.textContent = 'Delete';
-            deleteLink.onclick = function() {
-                // You can add a confirmation dialog or directly call a delete function here
-                // For simplicity, this example uses a confirmation dialog
-                var confirmDelete = confirm('Are you sure you want to delete this product?');
-                if (confirmDelete) {
-                    deleteProduct(product.product_id);
+                // Add delete link
+                var deleteLink = document.createElement('a');
+                deleteLink.href = 'delete_product.php?id=' + product.product_id; // Replace with your delete script
+                deleteLink.textContent = 'Delete';
+                deleteLink.onclick = function() {
+                    // You can add a confirmation dialog or directly call a delete function here
+                    // For simplicity, this example uses a confirmation dialog
+                    var confirmDelete = confirm('Are you sure you want to delete this product?');
+                    if (confirmDelete) {
+                        deleteProduct(product.product_id);
+                    }
+                    return false; // Prevent the default link behavior
+                };
+
+                cell6.appendChild(updateLink);
+                cell7.appendChild(deleteLink);
+            });
+        }
+
+        function deleteProduct(productId) {
+        // Perform the delete operation using AJAX
+        fetch('delete_product.php?id=' + productId)
+            .then(response => response.json())
+            .then(data => {
+                // Check if the deletion was successful
+                if (data.success) {
+                    // Reload the table after a successful delete
+                    fetchProducts();
+                } else {
+                    console.error('Error deleting product:', data.error);
                 }
-                return false; // Prevent the default link behavior
-            };
-
-            cell6.appendChild(updateLink);
-            cell7.appendChild(deleteLink);
-        });
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error);
+            });
     }
 
-    function deleteProduct(productId) {
-    // Perform the delete operation using AJAX
-    fetch('delete_product.php?id=' + productId)
-        .then(response => response.json())
-        .then(data => {
-            // Check if the deletion was successful
-            if (data.success) {
-                // Reload the table after a successful delete
-                fetchProducts();
-            } else {
-                console.error('Error deleting product:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting product:', error);
-        });
-}
 
-
-</script>
+    </script>
 </body>
 </html>
