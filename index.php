@@ -106,6 +106,23 @@ $conn->close();
             });
         }
 
+
+        //Fetch product by Category ID
+        function fetchProductByID(CategoryID) {
+        fetch('admin/getProductByCategory.php?CategoryID='+CategoryID)
+            .then(response => {
+                // Log the raw response for debugging
+                console.log('Raw response:', response);
+                return response.json();
+            })
+            .then(data => {
+                displayProduct(data);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+        }
+
         function displayProduct(products) {
             const productsContainer = document.getElementById('products');
             productsContainer.innerHTML = '';
@@ -141,8 +158,14 @@ $conn->close();
 
             categories.forEach(category => {
                 const categoryLink = document.createElement('a');
-                categoryLink.href = `?category=${category.category_id}`;
+                categoryLink.href = `javascript:void(0);`;
                 categoryLink.textContent = category.category_name;
+                
+                 // Attach a click event to each category link
+            categoryLink.addEventListener('click', function () {
+                fetchProductByID(category.category_id); // Load products for the selected category
+                //alert(category.category_id);
+            });
                 categoriesContainer.appendChild(categoryLink);
             });
         }
