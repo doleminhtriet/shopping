@@ -6,7 +6,7 @@ include "../conn.php"; // Include the database connection script
 header('Content-Type: application/json');
 
 
-
+//get all product
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
 

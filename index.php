@@ -75,11 +75,13 @@
 
 
 <script>
+        //initial loading website
         window.onload = function() {
             fetchProducts();
             fetchCategories();
         };
 
+        //load data from get_products.php
         function fetchProducts() {
         fetch('admin/get_products.php')
             .then(response => {
@@ -129,7 +131,7 @@
             });
         }
 
-
+        //load data category from get_Category.php
         function fetchCategories() {
         fetch('admin/get_Category.php')
             .then(response => response.json())
@@ -141,6 +143,7 @@
             });
     }
 
+        //show category on HTML
         function displayCategories(categories) {
             const categoriesContainer = document.getElementById('categories');
             categoriesContainer.innerHTML = '';

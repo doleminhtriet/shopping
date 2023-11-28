@@ -41,10 +41,12 @@
 </div>
 
     <script>
+        //initial load page
         window.onload = function() {
             fetchProducts();
         };
 
+        //load product from database
         function fetchProducts() {
         fetch('get_products.php')
             .then(response => {
@@ -60,6 +62,7 @@
             });
         }
 
+        //load product into table
         function updateTable(products) {
             var tableBody = document.getElementById('productTableBody');
 
@@ -108,6 +111,7 @@
             });
         }
 
+        //delete product, call function  delete_product.php
         function deleteProduct(productId) {
         // Perform the delete operation using AJAX
         fetch('delete_product.php?id=' + productId)
