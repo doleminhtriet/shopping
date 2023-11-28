@@ -35,24 +35,38 @@
             color: #333;
         }
         .products {
+            list-style: none;
+            padding: 0;
+            margin: 0;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
+            justify-content: space-around; /* Adjust as needed */
         }
+
+        .products li {
+            width: calc(30% - 20px); /* 3 columns with 20px spacing */
+            margin: 10px;
+            box-sizing: border-box;
+        }
+
+        .products a {
+            text-decoration: none;
+            color: #333;
+        }
+
         .product-card {
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 15px;
-            margin: 10px;
-            width: 200px;
-            box-sizing: border-box;
             background-color: #fff;
         }
+
         img {
             max-width: 100%;
             height: auto;
         }
+
+
     </style>
 </head>
 <body>
@@ -116,19 +130,25 @@
 
         function displayProduct(products) {
             const productsContainer = document.getElementById('products');
-            productsContainer.innerHTML = '';
+    productsContainer.innerHTML = '';
 
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <h3>${product.product_name}</h3>
-                    <p>${'<img src="data:image/jpeg;base64,' + product.product_image + '" alt="Product Image" style="max-width:100px; max-height:100px;">'}</p>
-                    <p>${product.description}</p>
-                    <p>Price: $${product.price}</p>
-                `;
-                productsContainer.appendChild(productCard);
-            });
+    const productList = document.createElement('ul');
+    productList.className = 'products';
+
+    products.forEach(product => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <a href="#">
+                <img src="data:image/jpeg;base64,${product.product_image}" alt="Product Image" style="max-width:100px; max-height:100px;">
+                <h4>${product.product_name}</h4>
+                <p>Price: $${product.price}</p>
+            </a>
+        `;
+
+        productList.appendChild(listItem);
+    });
+
+    productsContainer.appendChild(productList);
         }
 
         //load data category from get_Category.php
