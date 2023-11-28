@@ -57,15 +57,7 @@
 </head>
 <body>
 
-<?php
-// Include database connection file
-include 'conn.php';
 
-// Fetch categories with images
-$sqlCategories = "SELECT category_id, category_name, category_image FROM category";
-$resultCategories = $conn->query($sqlCategories);
-
-?>
 
 <header>
     <h1>Shopping</h1>
@@ -79,10 +71,7 @@ $resultCategories = $conn->query($sqlCategories);
     
 </div>
 
-<?php
-// Close the database connection
-$conn->close();
-?>
+
 
 
 <script>
