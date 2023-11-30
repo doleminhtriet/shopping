@@ -130,20 +130,20 @@
 
         function displayProduct(products) {
             const productsContainer = document.getElementById('products');
-    productsContainer.innerHTML = '';
+            productsContainer.innerHTML = '';
 
-    const productList = document.createElement('ul');
-    productList.className = 'products';
+            const productList = document.createElement('ul');
+            productList.className = 'products';
 
-    products.forEach(product => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-            <a href="#">
-                <img src="data:image/jpeg;base64,${product.product_image}" alt="Product Image" style="max-width:100px; max-height:100px;">
-                <h4>${product.product_name}</h4>
-                <p>Price: $${product.price}</p>
-            </a>
-        `;
+            products.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <a href=UI_productDetail.php?id=${product.product_id}>
+                        <img src="data:image/jpeg;base64,${product.product_image}" alt="Product Image" style="max-width:100px; max-height:100px;">
+                        <h4>${product.product_name}</h4>
+                        <p>Price: $${product.price}</p>
+                    </a>
+                `;
 
         productList.appendChild(listItem);
     });
